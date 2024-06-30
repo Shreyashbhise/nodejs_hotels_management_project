@@ -28,4 +28,5 @@ const menuItemsSchema = new mongoose.Schema({
 
 const Menuitems =  mongoose.model('Menuitems', menuItemsSchema);
 
+// comment added for the testing purpose
 module.exports = Menuitems;
