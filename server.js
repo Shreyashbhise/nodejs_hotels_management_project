@@ -4,7 +4,10 @@ const app = express();
 
 const db = require('./db');
 
+
 require('dotenv').config();
+const passport = require('./auth');
+
 
 
 
@@ -16,6 +19,19 @@ app.use(bodypParser.json());
 
 const PORT = process.env.PORT || 3000;
 
+// Middleware function  Logger middleware: Logs each request to /users routes
+
+const logRequest = (req,res,next) => {
+    console.log(`${new Date().toLocaleString()} Request made to ${req.originalUrl}`);
+    next();
+}
+
+app.use(logRequest);
+
+
+
+const localAuthmiddleware = passport.authenticate('local', {session: false})
+app.use(passport.initialize());
 app.get('/',  (req,res) => {
     res.send('Welcome to our hotel');
 })
@@ -27,10 +43,10 @@ app.get('/',  (req,res) => {
 // import the person
 
 const personRoutes = require('./routes/personRoutes');
-app.use('/person',personRoutes);
+app.use('/person',localAuthmiddleware,personRoutes);
 
 const menuItemRoutes = require('./routes/menuItemRoutes');
-app.use('/menu',menuItemRoutes);
+app.use('/menu', menuItemRoutes);
 
 
 app.listen(PORT, () => {
