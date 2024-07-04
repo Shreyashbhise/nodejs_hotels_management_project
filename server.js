@@ -43,7 +43,7 @@ app.get('/',  (req,res) => {
 // import the person
 
 const personRoutes = require('./routes/personRoutes');
-app.use('/person',localAuthmiddleware,personRoutes);
+app.use('/person',personRoutes);
 
 const menuItemRoutes = require('./routes/menuItemRoutes');
 app.use('/menu', menuItemRoutes);
